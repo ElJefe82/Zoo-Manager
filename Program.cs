@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using System.Text;
+﻿using System.Text;
 using Newtonsoft.Json;
 
 namespace Zoo_Manager {
@@ -12,8 +11,7 @@ namespace Zoo_Manager {
 			LadeBenutzer();
 			ErstelleAdmin();
 
-			while (true) // bis Benutzer 4 drückt
-			{
+			while (true) { // bis Benutzer 4 drückt
 				Console.Clear();
 				Console.WriteLine("=======ZooManager=======");
 				Console.WriteLine("1 - Admin anmelden");
@@ -25,9 +23,9 @@ namespace Zoo_Manager {
 				var wahl = Console.ReadLine();
 
 				if (wahl == "1") {
-					Login("Admin");
-					Console.WriteLine("sdkfjadklflsjdf");
-				} else if (wahl == "2") { Login("Pfleger"); } else if (wahl == "3") {
+					Login(Rolle.Admin);
+					Console.WriteLine("Admin");
+				} else if (wahl == "2") { Login(Rolle.Pfleger); } else if (wahl == "3") {
 					Console.WriteLine("Besucherbereich ohne Anmeldung kommt vorraussichtlich in Tag 5");
 					Console.ReadKey();
 				} else if (wahl == "4")
@@ -37,7 +35,7 @@ namespace Zoo_Manager {
 
 		//====================LOGIN====================
 
-		static void Login(string rolle) {
+		static void Login(Rolle rolle) {
 			Console.Clear();
 			Console.Write("Benutzername: ");
 			var name = Console.ReadLine();
@@ -51,10 +49,10 @@ namespace Zoo_Manager {
 				return;
 			}
 
-			var salt = Convert.FromBase64String(user.Salt);
-			var hash = HashPasswort(passwort!, salt);
+			//var salt = Convert.FromBase64String(user.Passwort);
+			//var hash = HashPasswort(passwort!, salt);
 
-			if (Convert.ToBase64String(hash) == user.PasswortHash) {
+			if (user.Passwort == passwort) {
 				AktiverBenutzer = user;
 				BenutzerVerwaltung();
 			} else {
@@ -81,15 +79,15 @@ namespace Zoo_Manager {
 			return sb.ToString();
 		}
 
-		static byte[] ErzeugeSalt() {
-			byte[] s = new byte[16];
-			RandomNumberGenerator.Fill(s);
-			return s;
-		}
+		//static byte[] ErzeugeSalt() {
+		//	byte[] s = new byte[16];
+		//	RandomNumberGenerator.Fill(s);
+		//	return s;
+		//}
 
-		static byte[] HashPasswort(string passwort, byte[] salt) {
-			return SHA256.HashData(Encoding.UTF8.GetBytes(passwort).Concat(salt).ToArray());
-		}
+		//static byte[] HashPasswort(string passwort, byte[] salt) {
+		//	return SHA256.HashData(Encoding.UTF8.GetBytes(passwort).Concat(salt).ToArray());
+		//}
 
 		//====================BENUTZERVERWALTUNG====================
 
@@ -144,14 +142,13 @@ namespace Zoo_Manager {
 				return;
 			}
 
-			var salt = ErzeugeSalt();
-			var hash = HashPasswort(pw, salt);
+			//var salt = ErzeugeSalt();
+			//var hash = HashPasswort(pw, salt);
 
 			Benutzer.Add(new Benutzer {
 				Benutzername = name!,
-				Rolle = rolle!,
-				Salt = Convert.ToBase64String(salt),
-				PasswortHash = Convert.ToBase64String(hash)
+				Passwort = pw,
+				Rolle = rolle == "Admin" ? Rolle.Admin : Rolle.Pfleger
 			});
 
 			SpeichernBenutzer();
@@ -187,13 +184,12 @@ namespace Zoo_Manager {
 		}
 
 		static void ErstelleAdmin() {
-			if (!Benutzer.Any(b => b.Rolle == "Admin")) {
-				var salt = ErzeugeSalt();
+			if (!Benutzer.Any(b => b.Rolle == Rolle.Admin)) {
+				//var salt = ErzeugeSalt();
 				Benutzer.Add(new Benutzer {
 					Benutzername = "admin",
-					Rolle = "Admin",
-					Salt = Convert.ToBase64String(salt),
-					PasswortHash = Convert.ToBase64String(HashPasswort("admin", salt))
+					Passwort = "admin123!?",
+					Rolle = Rolle.Admin
 				});
 				SpeichernBenutzer();
 			}
