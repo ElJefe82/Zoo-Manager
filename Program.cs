@@ -49,9 +49,6 @@ namespace Zoo_Manager {
 				return;
 			}
 
-			//var salt = Convert.FromBase64String(user.Passwort);
-			//var hash = HashPasswort(passwort!, salt);
-
 			if (user.Passwort == passwort) {
 				AktiverBenutzer = user;
 				BenutzerVerwaltung();
@@ -78,16 +75,6 @@ namespace Zoo_Manager {
 			Console.WriteLine();
 			return sb.ToString();
 		}
-
-		//static byte[] ErzeugeSalt() {
-		//	byte[] s = new byte[16];
-		//	RandomNumberGenerator.Fill(s);
-		//	return s;
-		//}
-
-		//static byte[] HashPasswort(string passwort, byte[] salt) {
-		//	return SHA256.HashData(Encoding.UTF8.GetBytes(passwort).Concat(salt).ToArray());
-		//}
 
 		//====================BENUTZERVERWALTUNG====================
 
@@ -142,9 +129,6 @@ namespace Zoo_Manager {
 				return;
 			}
 
-			//var salt = ErzeugeSalt();
-			//var hash = HashPasswort(pw, salt);
-
 			Benutzer.Add(new Benutzer {
 				Benutzername = name!,
 				Passwort = pw,
@@ -185,7 +169,7 @@ namespace Zoo_Manager {
 
 		static void ErstelleAdmin() {
 			if (!Benutzer.Any(b => b.Rolle == Rolle.Admin)) {
-				//var salt = ErzeugeSalt();
+
 				Benutzer.Add(new Benutzer {
 					Benutzername = "admin",
 					Passwort = "admin123!?",
