@@ -1,4 +1,4 @@
-﻿namespace Zoo_Manager {
+﻿namespace Zoo_Manager.Models {
 	internal record Benutzer {
 		public string Benutzername { get; set; } = "";
 		public string Passwort { get; set; } = string.Empty;

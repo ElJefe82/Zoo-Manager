@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
+using Zoo_Manager.Models;
 
 namespace Zoo_Manager {
 	internal class Program {

@@ -1,4 +1,4 @@
-﻿namespace Zoo_Manager {
+﻿namespace Zoo_Manager.Models {
 	public enum Rolle {
 		Admin,
 		Pfleger,
