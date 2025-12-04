@@ -1,4 +1,4 @@
-﻿namespace Zoo_Manager {
+﻿namespace Zoo_Manager.Models {
 	internal class Tier {
 
 		public int ID { get; set; } = 0;
