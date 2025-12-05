@@ -29,15 +29,5 @@ namespace Zoo_Manager.Services {
 				JsonRepository.SpeichereDaten(_pfleger, _filePath);
 			}
 		}
-
-		public void Update(Pfleger updatedPfleger) {
-
-			var pfleger = _pfleger.FirstOrDefault(p => p.Id == updatedPfleger.Id);
-			if (pfleger != null) {
-				pfleger.Name = updatedPfleger.Name;
-				pfleger.Einsatzort = updatedPfleger.Einsatzort;
-				JsonRepository.SpeichereDaten(_pfleger, _filePath);
-			}
-		}
 	}
 }
