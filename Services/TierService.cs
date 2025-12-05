@@ -1,5 +1,5 @@
-﻿using Zoo_Manager.Ablage;
-using Zoo_Manager.Models;
+﻿using Zoo_Manager.Models;
+using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
 	public class TierService {
@@ -14,29 +14,31 @@ namespace Zoo_Manager.Services {
 
 		public List<Tier> GetAll() => _tiere;
 
-		public void TierHinzufügen(Tier tier) {
+		public void Hinzufügen(Tier tier) {
 
-			tier.ID = _tiere.Any() ? _tiere.Max(t => t.ID) + 1 : 1;
+			tier.Id = _tiere.Any() ? _tiere.Max(t => t.Id) + 1 : 1;
 			_tiere.Add(tier);
 			JsonRepository.SpeichereDaten(_tiere, _filePath);
 		}
 
-		public void TierLöschen(int id) {
-			var tier = _tiere.FirstOrDefault(t => t.ID == id);
+		public void Löschen(int id) {
+
+			var tier = _tiere.FirstOrDefault(t => t.Id == id);
 			if (tier != null) {
 				_tiere.Remove(tier);
 				JsonRepository.SpeichereDaten(_tiere, _filePath);
 			}
 		}
 
-		public void UpdateTier(Tier updatedTier) {
-			var tier = _tiere.FirstOrDefault(t => t.ID == updatedTier.ID);
+		public void Update(Tier updatedTier) {
+
+			var tier = _tiere.FirstOrDefault(t => t.Id == updatedTier.Id);
 			if (tier != null) {
 
 				tier.Name = updatedTier.Name;
 				tier.Art = updatedTier.Art;
 				tier.Alter = updatedTier.Alter;
-				tier.Gehege = updatedTier.Gehege;
+				tier.GehegeId = updatedTier.GehegeId;
 				JsonRepository.SpeichereDaten(_tiere, _filePath);
 			}
 		}
