@@ -105,18 +105,50 @@ namespace Zoo_Manager {
 			}
 		}
 
-		static string PasswortLesen() {
-			var sb = new StringBuilder();
-			while (true) {
-				var key = Console.ReadKey(true);
-				if (key.Key == ConsoleKey.Enter)
+			////====================ADMIN-MENÜ (VOLLZUGRIFF)====================
+
+			void AdminMenue() {
+				bool logout = false;
+
+				while (!logout) {
+					Console.Clear();
+					Console.WriteLine("=== Admin-Menü ===");
+					Console.WriteLine("1 - Tierverwaltung");
+					Console.WriteLine("2 - Gehegeverwaltung");
+					Console.WriteLine("3 - Pflegerverwaltung");
+					Console.WriteLine("4 - Besucherinfo");
+					Console.WriteLine("5 - Tier-Ratespiel");
+					Console.WriteLine("6 - Logout");
+					Console.Write("\nAuswahl:");
+
+					try {
+						input = Convert.ToInt32(Console.ReadLine());
+					} catch (FormatException) {
+						Console.WriteLine("Ungültige Eingabe!");
+					}
+					switch (input) {
+						case 1:
+							TierMenue();
 					break;
-				if (key.Key == ConsoleKey.Backspace && sb.Length > 0) {
-					sb.Remove(sb.Length - 1, 1);
-					Console.Write("\b \b");
-				} else {
-					sb.Append(key.KeyChar);
-					Console.Write("*");
+						case 2:
+							GehegeMenue();
+							break;
+						case 3:
+							PflegerMenueAdmin();
+							break;
+						case 4:
+							BesucherInfo();
+							break;
+						case 5:
+							spielService.Start();
+							break;
+						case 6:
+							logout = true;
+							break;
+						default:
+							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 6 an!");
+							Console.ReadKey();
+							break;
 				}
 			}
 			Console.WriteLine();
