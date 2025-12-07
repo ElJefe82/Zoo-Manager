@@ -57,27 +57,51 @@ namespace Zoo_Manager {
 		}
 
 		//====================LOGIN====================
+			void LoginMenue() {
+				Console.Clear();
+				Console.WriteLine("=== Login ===");
+				Console.Write("Benutzername: ");
+				string benutzername = Console.ReadLine();
 
-		static void Login(Rolle rolle) {
+				while (string.IsNullOrWhiteSpace(benutzername)) {
+					Console.WriteLine("Benutzername darf nicht leer sein. Bitte erneut eingeben.");
+					Console.ReadKey();
 			Console.Clear();
+					Console.WriteLine("=== Login ===");
 			Console.Write("Benutzername: ");
-			var name = Console.ReadLine();
-			Console.Write("Passwort: ");
-			var passwort = PasswortLesen();
+					benutzername = Console.ReadLine();
+				}
 
-			var user = Benutzer.FirstOrDefault(b => b.Benutzername == name && b.Rolle == rolle);
-			if (user == null) {
-				Console.WriteLine("Benutzer nicht gefunden");
+			Console.Write("Passwort: ");
+				string passwort = Console.ReadLine();
+
+				while (string.IsNullOrWhiteSpace(passwort)) {
+					Console.WriteLine("Passwort darf nicht leer sein. Bitte erneut eingeben.");
+					Console.Write("Passwort: ");
+					passwort = Console.ReadLine();
+				}
+
+				if (!benutzerService.Login(benutzername, passwort)) {
+					Console.WriteLine("Login fehlgeschlagen!");
 				Console.ReadKey();
 				return;
 			}
 
-			if (user.Passwort == passwort) {
-				AktiverBenutzer = user;
-				BenutzerVerwaltung();
-			} else {
-				Console.WriteLine("Falsches Passwort");
+				Console.WriteLine($"Erfolgreich eingeloggt als {benutzerService.LoggedInBenutzer.Rolle}!");
 				Console.ReadKey();
+
+				switch (benutzerService.LoggedInBenutzer.Rolle) {
+					case Rolle.Admin:
+						AdminMenue();
+						break;
+
+					case Rolle.Pfleger:
+						//PflegerMenue();
+						break;
+
+					default:
+						//BesucherMenue();
+						break;
 			}
 		}
 
