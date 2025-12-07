@@ -1,14 +1,9 @@
-﻿using System.Text;
-using Newtonsoft.Json;
-using Zoo_Manager.Models;
 ﻿using Zoo_Manager.Models;
 using Zoo_Manager.Services;
 
 namespace Zoo_Manager {
 	internal class Program {
 		static void Main(string[] args) {
-			LadeBenutzer();
-			ErstelleAdmin();
 
 			var tierService = new TierService();
 			var gehegeService = new GehegeService();
@@ -51,12 +46,12 @@ namespace Zoo_Manager {
 						break;
 					default:
 						Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 3 an!");
-					Console.ReadKey();
+						Console.ReadKey();
 						break;
+				}
 			}
-		}
 
-		//====================LOGIN====================
+			//====================LOGIN====================
 			void LoginMenue() {
 				Console.Clear();
 				Console.WriteLine("=== Login ===");
@@ -66,13 +61,13 @@ namespace Zoo_Manager {
 				while (string.IsNullOrWhiteSpace(benutzername)) {
 					Console.WriteLine("Benutzername darf nicht leer sein. Bitte erneut eingeben.");
 					Console.ReadKey();
-			Console.Clear();
+					Console.Clear();
 					Console.WriteLine("=== Login ===");
-			Console.Write("Benutzername: ");
+					Console.Write("Benutzername: ");
 					benutzername = Console.ReadLine();
 				}
 
-			Console.Write("Passwort: ");
+				Console.Write("Passwort: ");
 				string passwort = Console.ReadLine();
 
 				while (string.IsNullOrWhiteSpace(passwort)) {
@@ -83,9 +78,9 @@ namespace Zoo_Manager {
 
 				if (!benutzerService.Login(benutzername, passwort)) {
 					Console.WriteLine("Login fehlgeschlagen!");
-				Console.ReadKey();
-				return;
-			}
+					Console.ReadKey();
+					return;
+				}
 
 				Console.WriteLine($"Erfolgreich eingeloggt als {benutzerService.LoggedInBenutzer.Rolle}!");
 				Console.ReadKey();
@@ -102,8 +97,8 @@ namespace Zoo_Manager {
 					default:
 						//BesucherMenue();
 						break;
+				}
 			}
-		}
 
 			////====================ADMIN-MENÜ (VOLLZUGRIFF)====================
 
@@ -129,7 +124,7 @@ namespace Zoo_Manager {
 					switch (input) {
 						case 1:
 							TierMenue();
-					break;
+							break;
 						case 2:
 							GehegeMenue();
 							break;
@@ -149,33 +144,88 @@ namespace Zoo_Manager {
 							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 6 an!");
 							Console.ReadKey();
 							break;
+					}
 				}
 			}
-			Console.WriteLine();
-			return sb.ToString();
-		}
 
-		//====================BENUTZERVERWALTUNG====================
+			////====================PFLEGER-MENÜ (BESCHRÄNKTER ZUGRIFF)====================
 
 			//void PflegerMenue() {
 
-				var w = Console.ReadLine();
+			//	bool logout = false;
 
 			//	while (!logout) {
 
-		static void BenutzerAnzeigen() {
-			Console.Clear();
-			foreach (var b in Benutzer)
-				Console.WriteLine($"{b.Benutzername} ({b.Rolle})");
-			Console.ReadKey();
-		}
+			//		Console.Clear();
+			//		Console.WriteLine("=== Pfleger-Menü ===");
+			//		Console.WriteLine("1 - Gehegeverwaltung");
+			//		Console.WriteLine("2 - Besucherinfo");
+			//		Console.WriteLine("3 - Logout");
+			//		Console.Write("\nAuswahl:");
 
-		static void BenutzerAnlegen() {
+			//		switch (Console.ReadLine()!) {
+
+			//			case "1":
+			//				GehegeMenue();
+			//				break;
+
+			//			case "2":
+			//				BesucherInfo();
+			//				break;
+
+			//			case "3":
+			//				logout = true;
+			//				break;
+
+			//			default:
+			//				Console.WriteLine("Ungültige Eingabe! Bitte versuchen Sie es erneut.");
+			//				Console.ReadKey();
+			//				break;
+			//		}
+			//	}
+			//}
+
+			////====================BESUCHER-MENÜ (OHNE LOGIN)====================
+
+			//void BesucherMenue() {
+			//	bool back = false;
+
+			//	while (!back) {
+
+			//		Console.Clear();
+			//		Console.WriteLine("=== Besucherbereich ===");
+			//		Console.WriteLine("1 - Besucherinfo");
+			//		Console.WriteLine("2 - Tier.Ratespiel");
+			//		Console.WriteLine("3 - Zurück");
+			//		Console.Write("\nAuswahl:");
+
+			//		switch (Console.ReadLine()!) {
+
+			//			case "1":
+			//				BesucherInfo();
+			//				break;
+
+			//			case "2":
+			//				//spielService.Start();
+			//				break;
+
+			//			case "3":
+			//				back = true;
+			//				break;
+
+			//			default:
+			//				Console.WriteLine("Ungültige Eingabe! Bitte versuchen Sie es erneut.");
+			//				Console.ReadKey();
+			//				break;
+			//		}
+			//	}
+			//}
+
 			////====================VERWALTUNGSMENÜS====================
 			void TierMenue() {
 				bool back = false;
 				while (!back) {
-			Console.Clear();
+					Console.Clear();
 					Console.WriteLine("=== Tierverwaltung ===");
 					Console.WriteLine("1 - Alle Tiere anzeigen");
 					Console.WriteLine("2 - Neues Tier anlegen");
@@ -188,7 +238,7 @@ namespace Zoo_Manager {
 						input = Convert.ToInt32(Console.ReadLine());
 					} catch (FormatException) {
 						Console.WriteLine("Ungültige Eingabe!");
-			}
+					}
 
 					switch (input) {
 						case 1:
@@ -208,9 +258,9 @@ namespace Zoo_Manager {
 							break;
 						default:
 							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 5 an!");
-				Console.ReadKey();
+							Console.ReadKey();
 							break;
-			}
+					}
 				}
 			}
 
@@ -247,10 +297,10 @@ namespace Zoo_Manager {
 				tierService.Hinzufuegen(neuesTier);
 				Console.WriteLine("Neues Tier erfolgreich angelegt!");
 				Console.ReadLine();
-		}
+			}
 
 			void TierLoeschen() {
-			Console.Clear();
+				Console.Clear();
 				Console.WriteLine("=== Tier löschen ===");
 				Console.Write("Geben Sie die ID des zu löschenden Tiers ein: ");
 				int id = Convert.ToInt32(Console.ReadLine());
@@ -272,7 +322,7 @@ namespace Zoo_Manager {
 					Console.WriteLine("Tier mit dieser ID nicht gefunden!");
 					Console.ReadLine();
 					return;
-			}
+				}
 				Console.Write("Neuer Name (aktuell: {0}): ", tier.Name);
 				tier.Name = Console.ReadLine();
 				Console.Write("Neue Art (aktuell: {0}): ", tier.Art);
@@ -284,28 +334,32 @@ namespace Zoo_Manager {
 				//tierService.Update(tier);
 				Console.WriteLine("Tier erfolgreich aktualisiert!");
 				Console.ReadLine();
-		}
+			}
 
-		static void LadeBenutzer() {
-			if (!File.Exists(BenutzerDatei))
-				return;
-			Benutzer = JsonConvert.DeserializeObject<List<Benutzer>>(File.ReadAllText(BenutzerDatei))
-			?? [];
-		}
+			void GehegeMenue() {
+				Console.Clear();
+				Console.WriteLine("=== Alle Gehege ===");
+				foreach (var g in gehegeService.GetAll())
+					Console.WriteLine(g);
+				Console.ReadLine();
+			}
 
-		static void SpeichernBenutzer() {
-			File.WriteAllText(BenutzerDatei, JsonConvert.SerializeObject(Benutzer, Newtonsoft.Json.Formatting.Indented));
-		}
+			void PflegerMenueAdmin() {
+				Console.Clear();
+				Console.WriteLine("=== Alle Pfleger ===");
+				foreach (var p in pflegerService.GetAll())
+					Console.WriteLine(p);
+				Console.ReadLine();
+			}
 
-		static void ErstelleAdmin() {
-			if (!Benutzer.Any(b => b.Rolle == Rolle.Admin)) {
+			void BesucherInfo() {
 
-				Benutzer.Add(new Benutzer {
-					Benutzername = "admin",
-					Passwort = "admin123!?",
-					Rolle = Rolle.Admin
-				});
-				SpeichernBenutzer();
+				Console.Clear();
+				Console.WriteLine("=== Besucherinfo ===");
+				Console.WriteLine("Willkommen im Zoo! Hier finden Sie Informationen über unsere Tiere und Gehege.");
+				foreach (var t in tierService.GetAll())
+					Console.WriteLine(t);
+				Console.ReadLine();
 			}
 		}
 	}
