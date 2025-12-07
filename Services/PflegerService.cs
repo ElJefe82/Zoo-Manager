@@ -2,7 +2,7 @@
 using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
-	internal class PflegerService {
+	internal class PflegerService : IService {
 
 		public readonly string _filePath = "pfleger.json";
 		private List<Pfleger> _pfleger;
@@ -21,13 +21,14 @@ namespace Zoo_Manager.Services {
 			JsonRepository.SpeichereDaten(_pfleger, _filePath);
 		}
 
-		public void Löschen(int id) {
-
+		public bool Loeschen(int id) {
 			var pfleger = _pfleger.FirstOrDefault(p => p.Id == id);
 			if (pfleger != null) {
 				_pfleger.Remove(pfleger);
 				JsonRepository.SpeichereDaten(_pfleger, _filePath);
+				return true;
 			}
+			return false;
 		}
 	}
 }

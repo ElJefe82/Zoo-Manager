@@ -2,7 +2,7 @@
 using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
-	internal class TierService {
+	internal class TierService : IService {
 		private readonly string _filePath = "tiere.json";
 		private List<Tier> _tiere;
 

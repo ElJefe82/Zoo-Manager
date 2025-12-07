@@ -2,7 +2,7 @@
 using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
-	internal class GehegeService {
+	internal class GehegeService : IService {
 
 		public readonly string _filePath = "gehege.json";
 		private List<Gehege> _gehege;
@@ -15,19 +15,19 @@ namespace Zoo_Manager.Services {
 		public List<Gehege> GetAll() => _gehege;
 
 		public void Hinzufuegen(Gehege gehege) {
-
 			gehege.Id = _gehege.Any() ? _gehege.Max(g => g.Id) + 1 : 1;
 			_gehege.Add(gehege);
 			JsonRepository.SpeichereDaten(_gehege, _filePath);
 		}
 
-		public void Löschen(int id) {
-
+		public bool Loeschen(int id) {
 			var gehege = _gehege.FirstOrDefault(g => g.Id == id);
 			if (gehege != null) {
 				_gehege.Remove(gehege);
 				JsonRepository.SpeichereDaten(_gehege, _filePath);
+				return true;
 			}
+			return false;
 		}
 
 		public void Update(Gehege updatedGehege) {
