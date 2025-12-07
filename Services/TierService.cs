@@ -7,7 +7,6 @@ namespace Zoo_Manager.Services {
 		private List<Tier> _tiere;
 
 		public TierService() {
-
 			_tiere = JsonRepository.LadeDaten<Tier>(_filePath);
 		}
 
@@ -28,17 +27,21 @@ namespace Zoo_Manager.Services {
 			return false;
 		}
 
-		public void Update(Tier updatedTier) {
+		public Tier? Update(int updatedTier) {
+			//TODO: Suche Tier und aktualisiere dessen Daten
 
-			var tier = _tiere.FirstOrDefault(t => t.Id == updatedTier.Id);
-			if (tier != null) {
 
-				tier.Name = updatedTier.Name;
-				tier.Art = updatedTier.Art;
-				tier.Alter = updatedTier.Alter;
-				tier.GehegeId = updatedTier.GehegeId;
-				JsonRepository.SpeichereDaten(_tiere, _filePath);
-			}
+			//var tier = _tiere.FirstOrDefault(t => t.Id == updatedTier.Id);
+			//if (tier != null) {
+			//	tier.Name = tier.Name;
+			//	tier.Art = updatedTier.Art;
+			//	tier.Alter = updatedTier.Alter;
+			//	tier.GehegeId = updatedTier.GehegeId;
+			//	JsonRepository.SpeichereDaten(_tiere, _filePath);
+			//	return tier;
+			//}
+			return null;
+		}
 
 		public Tier? TierSuche(int tierId) {
 			return _tiere.FirstOrDefault(t => t.Id == tierId);
