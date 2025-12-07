@@ -5,8 +5,7 @@ using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
 	public class BenutzerService {
-
-		private readonly string _filePath = "Daten/benutzer.json";
+		private readonly string _filePath = "benutzer.json";
 		private List<Benutzer> _benutzer;
 		public Benutzer LoggedInBenutzer { get; private set; }
 
@@ -15,9 +14,7 @@ namespace Zoo_Manager.Services {
 
 			// Standard-Admin-Benutzer erstellen, wenn keine Benutzer vorhanden sind
 			if (!_benutzer.Any()) {
-
 				_benutzer.Add(new Benutzer {
-
 					Benutzername = "admin",
 					PasswortHash = HashPasswort("admin"),
 					Rolle = Rolle.Admin,
@@ -27,12 +24,10 @@ namespace Zoo_Manager.Services {
 		}
 
 		public bool Login(string benutzername, string passwort) {
-
 			string hash = HashPasswort(passwort);
 			var benutzer = _benutzer.FirstOrDefault(b => b.Benutzername == benutzername);
 
 			if (benutzer != null) {
-
 				LoggedInBenutzer = benutzer;
 				return true;
 			}
@@ -40,7 +35,6 @@ namespace Zoo_Manager.Services {
 		}
 
 		private string HashPasswort(string passwort) {
-
 			using var sha256 = SHA256.Create();
 			return Convert.ToBase64String(sha256.ComputeHash(Encoding.UTF8.GetBytes(passwort)));
 		}

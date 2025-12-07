@@ -2,9 +2,9 @@
 using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
-	public class GehegeService {
+	internal class GehegeService {
 
-		public readonly string _filePath = "Daten/gehege.json";
+		public readonly string _filePath = "gehege.json";
 		private List<Gehege> _gehege;
 
 		public GehegeService() {
@@ -14,7 +14,7 @@ namespace Zoo_Manager.Services {
 
 		public List<Gehege> GetAll() => _gehege;
 
-		public void Hinzufügen(Gehege gehege) {
+		public void Hinzufuegen(Gehege gehege) {
 
 			gehege.Id = _gehege.Any() ? _gehege.Max(g => g.Id) + 1 : 1;
 			_gehege.Add(gehege);

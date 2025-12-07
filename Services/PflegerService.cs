@@ -2,9 +2,9 @@
 using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
-	public class PflegerService {
+	internal class PflegerService {
 
-		public readonly string _filePath = "Daten/pfleger.json";
+		public readonly string _filePath = "pfleger.json";
 		private List<Pfleger> _pfleger;
 
 		public PflegerService() {
@@ -14,7 +14,7 @@ namespace Zoo_Manager.Services {
 
 		public List<Pfleger> GetAll() => _pfleger;
 
-		public void Hinzufügen(Pfleger pfleger) {
+		public void Hinzufuegen(Pfleger pfleger) {
 
 			pfleger.Id = _pfleger.Any() ? _pfleger.Max(p => p.Id) + 1 : 1;
 			_pfleger.Add(pfleger);

@@ -2,9 +2,8 @@
 using Zoo_Manager.Repository;
 
 namespace Zoo_Manager.Services {
-	public class TierService {
-
-		private readonly string _filePath = "Daten/tiere.json";
+	internal class TierService {
+		private readonly string _filePath = "tiere.json";
 		private List<Tier> _tiere;
 
 		public TierService() {
@@ -13,21 +12,20 @@ namespace Zoo_Manager.Services {
 		}
 
 		public List<Tier> GetAll() => _tiere;
-
-		public void Hinzufügen(Tier tier) {
-
+		public void Hinzufuegen(Tier tier) {
 			tier.Id = _tiere.Any() ? _tiere.Max(t => t.Id) + 1 : 1;
 			_tiere.Add(tier);
 			JsonRepository.SpeichereDaten(_tiere, _filePath);
 		}
 
-		public void Löschen(int id) {
-
+		public bool Loeschen(int id) {
 			var tier = _tiere.FirstOrDefault(t => t.Id == id);
 			if (tier != null) {
 				_tiere.Remove(tier);
 				JsonRepository.SpeichereDaten(_tiere, _filePath);
+				return true;
 			}
+			return false;
 		}
 
 		public void Update(Tier updatedTier) {
@@ -41,6 +39,9 @@ namespace Zoo_Manager.Services {
 				tier.GehegeId = updatedTier.GehegeId;
 				JsonRepository.SpeichereDaten(_tiere, _filePath);
 			}
+
+		public Tier? TierSuche(int tierId) {
+			return _tiere.FirstOrDefault(t => t.Id == tierId);
 		}
 	}
 }
