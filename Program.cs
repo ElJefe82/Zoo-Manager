@@ -157,26 +157,11 @@ namespace Zoo_Manager {
 
 		//====================BENUTZERVERWALTUNG====================
 
-		static void BenutzerVerwaltung() {
-			while (true) {
-				Console.Clear();
-				Console.WriteLine("=== Benutzerverwaltung ===");
-				Console.WriteLine("1) Benutzer anzeigen");
-				Console.WriteLine("2) Benutzer anlegen");
-				Console.WriteLine("3) Benutzer löschen");
-				Console.WriteLine("4) Logout");
+			//void PflegerMenue() {
 
 				var w = Console.ReadLine();
 
-				if (w == "1")
-					BenutzerAnzeigen();
-				else if (w == "2")
-					BenutzerAnlegen();
-				else if (w == "3")
-					BenutzerLöschen();
-				else if (w == "4") { AktiverBenutzer = null; return; }
-			}
-		}
+			//	while (!logout) {
 
 		static void BenutzerAnzeigen() {
 			Console.Clear();
@@ -186,53 +171,119 @@ namespace Zoo_Manager {
 		}
 
 		static void BenutzerAnlegen() {
+			////====================VERWALTUNGSMENÜS====================
+			void TierMenue() {
+				bool back = false;
+				while (!back) {
 			Console.Clear();
-			Console.Write("Benutzername: ");
-			var name = Console.ReadLine();
+					Console.WriteLine("=== Tierverwaltung ===");
+					Console.WriteLine("1 - Alle Tiere anzeigen");
+					Console.WriteLine("2 - Neues Tier anlegen");
+					Console.WriteLine("3 - Tier löschen");
+					Console.WriteLine("4 - Tier aktualisieren");
+					Console.WriteLine("5 - Zurück");
+					Console.Write("\nAuswahl:");
 
-			if (Benutzer.Any(b => b.Benutzername == name)) {
-				Console.WriteLine("Benutzer existiert bereits.");
-				Console.ReadKey();
-				return;
+					try {
+						input = Convert.ToInt32(Console.ReadLine());
+					} catch (FormatException) {
+						Console.WriteLine("Ungültige Eingabe!");
 			}
 
-			Console.Write("Passwort: ");
-			var pw = PasswortLesen();
-
-			Console.Write("Rolle (Admin/Pfleger): ");
-			var rolle = Console.ReadLine();
-
-			if (rolle != "Admin" && rolle != "Pfleger") {
-				Console.WriteLine("Ungültige Rolle.");
+					switch (input) {
+						case 1:
+							TiereAnzeigen();
+							break;
+						case 2:
+							TierAnlegen();
+							break;
+						case 3:
+							TierLoeschen();
+							break;
+						case 4:
+							TierUpdate();
+							break;
+						case 5:
+							back = true;
+							break;
+						default:
+							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 5 an!");
 				Console.ReadKey();
-				return;
+							break;
+			}
+				}
 			}
 
-			Benutzer.Add(new Benutzer {
-				Benutzername = name!,
-				Passwort = pw,
-				Rolle = rolle == "Admin" ? Rolle.Admin : Rolle.Pfleger
-			});
+			void TiereAnzeigen() {
+				Console.Clear();
+				Console.WriteLine("=== Alle Tiere ===");
+				if (tierService.GetAll().Any()) {
+					foreach (var t in tierService.GetAll()) {
+						Console.WriteLine(t);
+					}
+				} else {
+					Console.WriteLine("Keine Tiere im Zoo vorhanden.");
+				}
+				Console.ReadLine();
+			}
 
-			SpeichernBenutzer();
-			Console.WriteLine("Benutzer angelegt.");
-			Console.ReadKey();
+			void TierAnlegen() {
+				Console.Clear();
+				Console.WriteLine("=== Neues Tier anlegen ===");
+				Console.Write("Name: ");
+				string name = Console.ReadLine();
+				Console.Write("Art: ");
+				string art = Console.ReadLine();
+				Console.Write("Alter: ");
+				int alter = Convert.ToInt32(Console.ReadLine());
+				Console.Write("Gehege ID: ");
+				int gehegeId = Convert.ToInt32(Console.ReadLine());
+				var neuesTier = new Tier {
+					Name = name,
+					Art = art,
+					Alter = alter,
+					GehegeId = gehegeId
+				};
+				tierService.Hinzufuegen(neuesTier);
+				Console.WriteLine("Neues Tier erfolgreich angelegt!");
+				Console.ReadLine();
 		}
 
-		static void BenutzerLöschen() {
+			void TierLoeschen() {
 			Console.Clear();
-			Console.Write("Benutzername löschen: ");
-			var name = Console.ReadLine();
-			var benutzer = Benutzer.FirstOrDefault(b => b.Benutzername == name);
-
-			if (benutzer == null)
-				Console.WriteLine("Nicht gefunden.");
-			else {
-				Benutzer.Remove(benutzer);
-				SpeichernBenutzer();
-				Console.WriteLine("Benutzer gelöscht.");
+				Console.WriteLine("=== Tier löschen ===");
+				Console.Write("Geben Sie die ID des zu löschenden Tiers ein: ");
+				int id = Convert.ToInt32(Console.ReadLine());
+				bool erfolg = tierService.Loeschen(id);
+				if (erfolg)
+					Console.WriteLine("Tier erfolgreich gelöscht!");
+				else
+					Console.WriteLine("Tier mit dieser ID nicht gefunden!");
+				Console.ReadLine();
 			}
-			Console.ReadKey();
+
+			void TierUpdate() {
+				Console.Clear();
+				Console.WriteLine("=== Tier aktualisieren ===");
+				Console.Write("Geben Sie die ID des zu aktualisierenden Tiers ein: ");
+				int id = Convert.ToInt32(Console.ReadLine());
+				var tier = tierService.Update(id);
+				if (tier == null) {
+					Console.WriteLine("Tier mit dieser ID nicht gefunden!");
+					Console.ReadLine();
+					return;
+			}
+				Console.Write("Neuer Name (aktuell: {0}): ", tier.Name);
+				tier.Name = Console.ReadLine();
+				Console.Write("Neue Art (aktuell: {0}): ", tier.Art);
+				tier.Art = Console.ReadLine();
+				Console.Write("Neues Alter (aktuell: {0}): ", tier.Alter);
+				tier.Alter = Convert.ToInt32(Console.ReadLine());
+				Console.Write("Neue Gehege ID (aktuell: {0}): ", tier.GehegeId);
+				tier.GehegeId = Convert.ToInt32(Console.ReadLine());
+				//tierService.Update(tier);
+				Console.WriteLine("Tier erfolgreich aktualisiert!");
+				Console.ReadLine();
 		}
 
 		static void LadeBenutzer() {
