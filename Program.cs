@@ -1,36 +1,58 @@
 ﻿using System.Text;
 using Newtonsoft.Json;
 using Zoo_Manager.Models;
+﻿using Zoo_Manager.Models;
+using Zoo_Manager.Services;
 
 namespace Zoo_Manager {
 	internal class Program {
-		static readonly string BenutzerDatei = "mitarbeiter.json";
-		static List<Benutzer> Benutzer = new();
-		static Benutzer? AktiverBenutzer = null;
-
 		static void Main(string[] args) {
 			LadeBenutzer();
 			ErstelleAdmin();
 
-			while (true) { // bis Benutzer 4 drückt
+			var tierService = new TierService();
+			var gehegeService = new GehegeService();
+			var pflegerService = new PflegerService();
+			var benutzerService = new BenutzerService();
+			var spielService = new SpielService(tierService);
+
+			var input = 0;
+			while (input != 3) {
 				Console.Clear();
-				Console.WriteLine("=======ZooManager=======");
-				Console.WriteLine("1 - Admin anmelden");
-				Console.WriteLine("2 - Pfleger anmelden");
-				Console.WriteLine("3 - Besucher");
-				Console.WriteLine("4 - Beenden");
+				Console.WriteLine("======= ZooManager =======");
+				Console.WriteLine("1 - Login");
+				Console.WriteLine("2 - Besucher");
+				Console.WriteLine("3 - Beenden");
 				Console.Write("\nAuswahl:");
 
-				var wahl = Console.ReadLine();
+				try {
+					input = Convert.ToInt32(Console.ReadLine());
+				} catch (FormatException) {
+					Console.WriteLine("Ungültige Eingabe!");
+				}
 
-				if (wahl == "1") {
-					Login(Rolle.Admin);
-					Console.WriteLine("Admin");
-				} else if (wahl == "2") { Login(Rolle.Pfleger); } else if (wahl == "3") {
-					Console.WriteLine("Besucherbereich ohne Anmeldung kommt vorraussichtlich in Tag 5");
+				switch (input) {
+					case 1:
+						LoginMenue();
+						break;
+					case 2:
+						//BesucherMenue();
+						break;
+					case 3:
+						const int wartezeitMs = 1000;
+						Console.Write("\aProgramm wird beendet");
+						for (int i = 0; i < 3; i++) {
+							Thread.Sleep(wartezeitMs);
+							Console.Write(".");
+						}
+						Thread.Sleep(wartezeitMs);
+						Console.WriteLine();
+						Console.WriteLine("Auf Wiedersehen!!!");
+						break;
+					default:
+						Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 3 an!");
 					Console.ReadKey();
-				} else if (wahl == "4")
-					return;
+						break;
 			}
 		}
 
