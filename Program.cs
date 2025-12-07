@@ -280,21 +280,51 @@ namespace Zoo_Manager {
 			void TierAnlegen() {
 				Console.Clear();
 				Console.WriteLine("=== Neues Tier anlegen ===");
+				Console.WriteLine("Wähle die Tierart:");
+				Console.WriteLine("1 - Löwe");
+				Console.WriteLine("2 - Elefant");
+				Console.Write("Auswahl: ");
+
+				int artWahl;
+				while (!int.TryParse(Console.ReadLine(), out artWahl) || artWahl < 1 || artWahl > 3) {
+					Console.WriteLine("Ungültige Eingabe! Bitte 1, 2 oder 3 wählen.");
+					Console.Write("Auswahl: ");
+				}
+
 				Console.Write("Name: ");
 				string name = Console.ReadLine();
-				Console.Write("Art: ");
-				string art = Console.ReadLine();
 				Console.Write("Alter: ");
 				int alter = Convert.ToInt32(Console.ReadLine());
 				Console.Write("Gehege ID: ");
 				int gehegeId = Convert.ToInt32(Console.ReadLine());
-				var neuesTier = new Tier {
-					Name = name,
-					Art = art,
-					Alter = alter,
-					GehegeId = gehegeId
-				};
-				tierService.Hinzufuegen(neuesTier);
+
+				Tier neuesTier;
+				switch (artWahl) {
+					case 1: // Löwe
+						Console.Write("Ist Rudelführer? (j/n): ");
+						bool rudelfuehrer = Console.ReadLine()?.Trim().ToLower() == "j";
+						neuesTier = new Loewe {
+							Name = name,
+							Art = "Loewe",
+							Alter = alter,
+							GehegeId = gehegeId,
+							IstRudelfuehrer = rudelfuehrer
+						};
+						tierService.Hinzufuegen(neuesTier);
+						break;
+					case 2: // Elefant
+						Console.Write("Rüssel-Länge (in Meter): ");
+						double ruesselLaenge = Convert.ToDouble(Console.ReadLine());
+						neuesTier = new Elefant {
+							Name = name,
+							Art = "Elefant",
+							Alter = alter,
+							GehegeId = gehegeId,
+							RuesselLaenge = ruesselLaenge
+						};
+						tierService.Hinzufuegen(neuesTier);
+						break;
+				}
 				Console.WriteLine("Neues Tier erfolgreich angelegt!");
 				Console.ReadLine();
 			}
@@ -315,23 +345,24 @@ namespace Zoo_Manager {
 			void TierUpdate() {
 				Console.Clear();
 				Console.WriteLine("=== Tier aktualisieren ===");
+				TiereAnzeigen();
 				Console.Write("Geben Sie die ID des zu aktualisierenden Tiers ein: ");
 				int id = Convert.ToInt32(Console.ReadLine());
-				var tier = tierService.Update(id);
+
+				var tier = tierService.Suche(id);
 				if (tier == null) {
 					Console.WriteLine("Tier mit dieser ID nicht gefunden!");
 					Console.ReadLine();
 					return;
 				}
+				var erfolgreich = tierService.Update(tier);
 				Console.Write("Neuer Name (aktuell: {0}): ", tier.Name);
 				tier.Name = Console.ReadLine();
-				Console.Write("Neue Art (aktuell: {0}): ", tier.Art);
-				tier.Art = Console.ReadLine();
 				Console.Write("Neues Alter (aktuell: {0}): ", tier.Alter);
 				tier.Alter = Convert.ToInt32(Console.ReadLine());
 				Console.Write("Neue Gehege ID (aktuell: {0}): ", tier.GehegeId);
 				tier.GehegeId = Convert.ToInt32(Console.ReadLine());
-				//tierService.Update(tier);
+				tierService.Update(tier);
 				Console.WriteLine("Tier erfolgreich aktualisiert!");
 				Console.ReadLine();
 			}

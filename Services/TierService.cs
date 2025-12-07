@@ -27,23 +27,20 @@ namespace Zoo_Manager.Services {
 			return false;
 		}
 
-		public Tier? Update(int updatedTier) {
-			//TODO: Suche Tier und aktualisiere dessen Daten
-
-
-			//var tier = _tiere.FirstOrDefault(t => t.Id == updatedTier.Id);
-			//if (tier != null) {
-			//	tier.Name = tier.Name;
-			//	tier.Art = updatedTier.Art;
-			//	tier.Alter = updatedTier.Alter;
-			//	tier.GehegeId = updatedTier.GehegeId;
-			//	JsonRepository.SpeichereDaten(_tiere, _filePath);
-			//	return tier;
-			//}
-			return null;
+		public bool Update(Tier updatedTier) {
+			var tier = _tiere.FirstOrDefault(t => t.Id == updatedTier.Id);
+			if (tier != null) {
+				tier.Name = tier.Name;
+				tier.Art = updatedTier.Art;
+				tier.Alter = updatedTier.Alter;
+				tier.GehegeId = updatedTier.GehegeId;
+				JsonRepository.SpeichereDaten(_tiere, _filePath);
+				return true;
+			}
+			return false;
 		}
 
-		public Tier? TierSuche(int tierId) {
+		public Tier? Suche(int tierId) {
 			return _tiere.FirstOrDefault(t => t.Id == tierId);
 		}
 	}
