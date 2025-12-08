@@ -1,6 +1,5 @@
 ﻿namespace Zoo_Manager.Models {
 	internal class Tier {
-
 		public int Id { get; set; }
 		public string Name { get; set; } = string.Empty;
 		public string Art { get; set; } = string.Empty;

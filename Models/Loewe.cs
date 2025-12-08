@@ -3,7 +3,7 @@ namespace Zoo_Manager.Models {
 		public bool IstRudelfuehrer { get; set; }
 
 		public override string ToString() {
-			return base.ToString() + $", Rudelführer: {(IstRudelfuehrer ? "Ja" : "Nein")}";
+			return base.ToString() + $", Rudelfuehrer: {(IstRudelfuehrer ? "Ja" : "Nein")}";
 		}
 	}
 }
