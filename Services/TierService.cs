@@ -12,7 +12,11 @@ namespace Zoo_Manager.Services {
 
 		public List<Tier> GetAll() => _tiere;
 		public void Hinzufuegen(Tier tier) {
-			tier.Id = _tiere.Any() ? _tiere.Max(t => t.Id) + 1 : 1;
+			if (_tiere.Any()) {
+				tier.Id = _tiere.Max(t => t.Id) + 1;
+			} else {
+				tier.Id = 1;
+			}
 			_tiere.Add(tier);
 			JsonRepository.SpeichereDaten(_tiere, _filePath);
 		}
