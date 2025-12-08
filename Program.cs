@@ -148,42 +148,42 @@ namespace Zoo_Manager {
 				}
 			}
 
-			////====================PFLEGER-MENÜ (BESCHRÄNKTER ZUGRIFF)====================
+			//====================PFLEGER-MENÜ (BESCHRÄNKTER ZUGRIFF)====================
 
-			//void PflegerMenue() {
+			void PflegerMenue() {
 
-			//	bool logout = false;
+				bool logout = false;
 
-			//	while (!logout) {
+				while (!logout) {
 
-			//		Console.Clear();
-			//		Console.WriteLine("=== Pfleger-Menü ===");
-			//		Console.WriteLine("1 - Gehegeverwaltung");
-			//		Console.WriteLine("2 - Besucherinfo");
-			//		Console.WriteLine("3 - Logout");
-			//		Console.Write("\nAuswahl:");
+					Console.Clear();
+					Console.WriteLine("=== Pfleger-Menü ===");
+					Console.WriteLine("1 - Gehegeverwaltung");
+					Console.WriteLine("2 - Besucherinfo");
+					Console.WriteLine("3 - Logout");
+					Console.Write("\nAuswahl:");
 
-			//		switch (Console.ReadLine()!) {
+					switch (Console.ReadLine()!) {
 
-			//			case "1":
-			//				GehegeMenue();
-			//				break;
+						case "1":
+							GehegeMenue();
+							break;
 
-			//			case "2":
-			//				BesucherInfo();
-			//				break;
+						case "2":
+							BesucherInfo();
+							break;
 
-			//			case "3":
-			//				logout = true;
-			//				break;
+						case "3":
+							logout = true;
+							break;
 
-			//			default:
-			//				Console.WriteLine("Ungültige Eingabe! Bitte versuchen Sie es erneut.");
-			//				Console.ReadKey();
-			//				break;
-			//		}
-			//	}
-			//}
+						default:
+							Console.WriteLine("Ungültige Eingabe! Bitte versuchen Sie es erneut.");
+							Console.ReadKey();
+							break;
+					}
+				}
+			}
 
 			////====================BESUCHER-MENÜ (OHNE LOGIN)====================
 
@@ -434,7 +434,7 @@ namespace Zoo_Manager {
 				Console.WriteLine("=== Alle Gehege ===");
 				if (gehegeService.GetAll().Any()) {
 					foreach (var g in gehegeService.GetAll()) {
-					Console.WriteLine(g);
+						Console.WriteLine(g);
 					}
 				} else {
 					Console.WriteLine("Keine Gehege im Zoo vorhanden.");
@@ -543,7 +543,7 @@ namespace Zoo_Manager {
 			void PflegerMenueAdmin() {
 				bool back = false;
 				while (!back) {
-				Console.Clear();
+					Console.Clear();
 					Console.WriteLine("=== Pflegerverwaltung ===");
 					Console.WriteLine("1 - Alle Pfleger anzeigen");
 					Console.WriteLine("2 - Neuen Pfleger anlegen");
@@ -585,8 +585,8 @@ namespace Zoo_Manager {
 				Console.Clear();
 				Console.WriteLine("=== Alle Pfleger ===");
 				if (pflegerService.GetAll().Any()) {
-				foreach (var p in pflegerService.GetAll())
-					Console.WriteLine(p);
+					foreach (var p in pflegerService.GetAll())
+						Console.WriteLine(p);
 				} else {
 					Console.WriteLine("Keine Pfleger im Zoo vorhanden.");
 				}
@@ -643,6 +643,7 @@ namespace Zoo_Manager {
 				Console.WriteLine("Pfleger erfolgreich aktualisiert!");
 				Console.ReadLine();
 			}
+
 
 			void BesucherInfo() {
 
