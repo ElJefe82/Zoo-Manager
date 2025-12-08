@@ -387,19 +387,260 @@ namespace Zoo_Manager {
 				Console.ReadLine();
 			}
 
+			//Gehege
+
 			void GehegeMenue() {
+				bool back = false;
+				while (!back) {
+					Console.Clear();
+					Console.WriteLine("=== Gehegeverwaltung ===");
+					Console.WriteLine("1 - Alle Gehege anzeigen");
+					Console.WriteLine("2 - Neues Gehege anlegen");
+					Console.WriteLine("3 - Gehege löschen");
+					Console.WriteLine("4 - Gehege aktualisieren");
+					Console.WriteLine("5 - Zurück");
+					Console.Write("\nAuswahl:");
+					try {
+						input = Convert.ToInt32(Console.ReadLine());
+					} catch (FormatException) {
+						Console.WriteLine("Ungültige Eingabe!");
+					}
+					switch (input) {
+						case 1:
+							GehegeAnzeigen();
+							break;
+						case 2:
+							GehegeAnlegen();
+							break;
+						case 3:
+							GehegeLoeschen();
+							break;
+						case 4:
+							GehegeUpdate();
+							break;
+						case 5:
+							back = true;
+							break;
+						default:
+							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 5 an!");
+							Console.ReadKey();
+							break;
+					}
+				}
+			}
+
+			void GehegeAnzeigen() {
 				Console.Clear();
 				Console.WriteLine("=== Alle Gehege ===");
-				foreach (var g in gehegeService.GetAll())
+				if (gehegeService.GetAll().Any()) {
+					foreach (var g in gehegeService.GetAll()) {
 					Console.WriteLine(g);
+					}
+				} else {
+					Console.WriteLine("Keine Gehege im Zoo vorhanden.");
+				}
 				Console.ReadLine();
 			}
 
+			void GehegeAnlegen() {
+				bool back = false;
+				while (!back) {
+					Console.Clear();
+					Console.WriteLine("=== Neues Gehege anlegen ===");
+					Console.WriteLine("Wähle das Gehege:");
+					Console.WriteLine("1 - Raubtierhaus");
+					Console.WriteLine("2 - Afrikasavanne");
+					Console.WriteLine("3 - Zurück");
+					Console.WriteLine("Auswahl: ");
+
+					try {
+						input = Convert.ToInt32(Console.ReadLine());
+					} catch (FormatException) {
+						Console.WriteLine("Ungültige Eingabe!");
+					}
+
+					//int nameWahl;
+					//while (!int.TryParse(Console.ReadLine(), out nameWahl) || nameWahl < 1 || nameWahl > 3) {
+					//	Console.WriteLine("Ungültige Eingabe! Bitte 1, 2 oder 3 wählen.");  //weitere Gehege anlegen!
+					//	Console.Write("Auswahl: ");
+					//}
+
+					Console.Write("Lage: ");
+					string lage = Console.ReadLine();
+					Console.Write("Anzahl der Tiere: ");
+					int anzahlTiere = Convert.ToInt32(Console.ReadLine());
+
+					Gehege neuesGehege;
+					switch (input) {
+						case 1: // Raubtierhaus
+							Console.Write("Hat Zaun? (j/n): ");
+							bool hatZaun = Console.ReadLine()?.Trim().ToLower() == "j";
+							neuesGehege = new Raubtierhaus {
+								Name = "Raubtierhaus",
+								Lage = lage,
+								AnzahlTiere = anzahlTiere,
+								HatZaun = hatZaun
+							};
+							gehegeService.Hinzufuegen(neuesGehege);
+							break;
+						case 2: // Afrikasavanne		.				
+							Console.Write("Hat Wasserstelle? (j/n): ");
+							bool hatWasserstelle = Console.ReadLine()?.Trim().ToLower() == "j";
+							neuesGehege = new Afrikasavanne {
+								Name = "Afrikasavanne",
+								Lage = lage,
+								AnzahlTiere = anzahlTiere,
+								HatWasserstelle = hatWasserstelle
+							};
+							gehegeService.Hinzufuegen(neuesGehege);
+							break;
+						case 3: // Afrikasavanne		.				
+							back = true;
+							break;
+					}
+					Console.WriteLine("Neues Gehege erfolgreich angelegt!");
+					Console.ReadLine();
+					back = true;
+				}
+			}
+
+			void GehegeLoeschen() {
+				Console.Clear();
+				Console.WriteLine("=== Gehege löschen ===");
+				Console.Write("Geben Sie die ID des zu löschenden Geheges ein: ");
+				int id = Convert.ToInt32(Console.ReadLine());
+				bool erfolg = gehegeService.Loeschen(id);
+				if (erfolg)
+					Console.WriteLine("Gehege erfolgreich gelöscht!");
+				else
+					Console.WriteLine("Gehege mit dieser ID nicht gefunden!");
+				Console.ReadLine();
+			}
+
+			void GehegeUpdate() {
+				Console.Clear();
+				Console.WriteLine("=== Gehege aktualisieren ===");
+				GehegeAnzeigen();
+				Console.Write("Geben Sie die ID des zu aktualisierenden Geheges ein: ");
+				int id = Convert.ToInt32(Console.ReadLine());
+				var gehege = gehegeService.Suche(id);
+				if (gehege == null) {
+					Console.WriteLine("Gehege mit dieser ID nicht gefunden!");
+					Console.ReadLine();
+					return;
+				}
+				var erfolgreich = gehegeService.Update(gehege);
+				Console.Write("Neue Lage (aktuell: {0}): ", gehege.Lage);
+				gehege.Lage = Console.ReadLine();
+				Console.Write("Neue Anzahl der Tiere (aktuell: {0}): ", gehege.AnzahlTiere);
+				gehege.AnzahlTiere = Convert.ToInt32(Console.ReadLine());
+				gehegeService.Update(gehege);
+				Console.WriteLine("Gehege erfolgreich aktualisiert!");
+				Console.ReadLine();
+			}
+
+			//Pfleger
 			void PflegerMenueAdmin() {
+				bool back = false;
+				while (!back) {
+				Console.Clear();
+					Console.WriteLine("=== Pflegerverwaltung ===");
+					Console.WriteLine("1 - Alle Pfleger anzeigen");
+					Console.WriteLine("2 - Neuen Pfleger anlegen");
+					Console.WriteLine("3 - Pfleger löschen");
+					Console.WriteLine("4 - Pfleger aktualisieren");
+					Console.WriteLine("5 - Zurück");
+					Console.Write("\nAuswahl:");
+
+					try {
+						input = Convert.ToInt32(Console.ReadLine());
+					} catch (FormatException) {
+						Console.WriteLine("Ungültige Eingabe!");
+					}
+					switch (input) {
+						case 1:
+							PflegerAnzeigen();
+							break;
+						case 2:
+							PflegerAnlegen();
+							break;
+						case 3:
+							PflegerLoeschen();
+							break;
+						case 4:
+							PflegerUpdate();
+							break;
+						case 5:
+							back = true;
+							break;
+						default:
+							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 5 an!");
+							Console.ReadKey();
+							break;
+					}
+				}
+			}
+
+			void PflegerAnzeigen() {
 				Console.Clear();
 				Console.WriteLine("=== Alle Pfleger ===");
+				if (pflegerService.GetAll().Any()) {
 				foreach (var p in pflegerService.GetAll())
 					Console.WriteLine(p);
+				} else {
+					Console.WriteLine("Keine Pfleger im Zoo vorhanden.");
+				}
+				Console.ReadLine();
+			}
+
+			void PflegerAnlegen() {
+				Console.Clear();
+				Console.WriteLine("=== Neuen Pfleger anlegen ===");
+				Console.Write("Name: ");
+				string name = Console.ReadLine();
+				Console.Write("Einsatzort: ");
+				string einsatzort = Console.ReadLine();
+				Pfleger neuerPfleger = new Pfleger {
+					Name = name,
+					Einsatzort = einsatzort
+				};
+				pflegerService.Hinzufuegen(neuerPfleger);
+				Console.WriteLine("Neuer Pfleger erfolgreich angelegt!");
+				Console.ReadLine();
+			}
+
+			void PflegerLoeschen() {
+				Console.Clear();
+				Console.WriteLine("=== Pfleger löschen ===");
+				Console.Write("Geben Sie die ID des zu löschenden Pflegers ein: ");
+				int id = Convert.ToInt32(Console.ReadLine());
+				bool erfolg = pflegerService.Loeschen(id);
+				if (erfolg)
+					Console.WriteLine("Pfleger erfolgreich gelöscht!");
+				else
+					Console.WriteLine("Pfleger mit dieser ID nicht gefunden!");
+				Console.ReadLine();
+			}
+
+			void PflegerUpdate() {
+				Console.Clear();
+				Console.WriteLine("=== Pfleger aktualisieren ===");
+				PflegerAnzeigen();
+				Console.Write("Geben Sie die ID des zu aktualisierenden Pflegers ein: ");
+				int id = Convert.ToInt32(Console.ReadLine());
+				var pfleger = pflegerService.Suche(id);
+				if (pfleger == null) {
+					Console.WriteLine("Pfleger mit dieser ID nicht gefunden!");
+					Console.ReadLine();
+					return;
+				}
+				var erfolgreich = pflegerService.Update(pfleger);
+				Console.Write("Neuer Name (aktuell: {0}): ", pfleger.Name);
+				pfleger.Name = Console.ReadLine();
+				Console.Write("Neuer Einsatzort (aktuell: {0}): ", pfleger.Einsatzort);
+				pfleger.Einsatzort = Console.ReadLine();
+				pflegerService.Update(pfleger);
+				Console.WriteLine("Pfleger erfolgreich aktualisiert!");
 				Console.ReadLine();
 			}
 
