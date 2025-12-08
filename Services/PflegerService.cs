@@ -30,5 +30,20 @@ namespace Zoo_Manager.Services {
 			}
 			return false;
 		}
+
+		public bool Update(Pfleger updatedPfleger) {
+			var pfleger = _pfleger.FirstOrDefault(p => p.Id == updatedPfleger.Id);
+			if (pfleger != null) {
+				pfleger.Name = pfleger.Name;
+				pfleger.Einsatzort = updatedPfleger.Einsatzort;
+				JsonRepository.SpeichereDaten(_pfleger, _filePath);
+				return true;
+			}
+			return false;
+		}
+
+		public Pfleger? Suche(int pflegerId) {
+			return _pfleger.FirstOrDefault(p => p.Id == pflegerId);
+		}
 	}
 }
