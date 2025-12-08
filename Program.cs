@@ -35,14 +35,14 @@ namespace Zoo_Manager {
 						break;
 					case 3:
 						const int wartezeitMs = 1000;
-						Console.Write("\aProgramm wird beendet");
+						Console.Write("Programm wird beendet");
 						for (int i = 0; i < 3; i++) {
 							Thread.Sleep(wartezeitMs);
 							Console.Write(".");
 						}
 						Thread.Sleep(wartezeitMs);
 						Console.WriteLine();
-						Console.WriteLine("Auf Wiedersehen!!!");
+						Console.WriteLine("\aAuf Wiedersehen!!!");
 						break;
 					default:
 						Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 3 an!");
