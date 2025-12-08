@@ -22,7 +22,7 @@
 			}
 
 			var rnd = new Random();
-			var wahlTier = tiere[rnd.Next(tiere.Count)].Name.ToLower();
+			var wahlTier = tiere[rnd.Next(tiere.Count)].Art.ToLower();
 			var tip = new HashSet<char>();
 			int versuche = MaxVersuche;
 
