@@ -278,55 +278,75 @@ namespace Zoo_Manager {
 			}
 
 			void TierAnlegen() {
-				Console.Clear();
-				Console.WriteLine("=== Neues Tier anlegen ===");
-				Console.WriteLine("Wähle die Tierart:");
-				Console.WriteLine("1 - Löwe");
-				Console.WriteLine("2 - Elefant");
-				Console.Write("Auswahl: ");
+				bool back = false;
+				while (!back) {
+					Console.Clear();
+					Console.WriteLine("=== Neues Tier anlegen ===");
+					Console.WriteLine("Wähle die Tierart:");
+					Console.WriteLine("1 - Löwe");
+					Console.WriteLine("2 - Elefant");
+					Console.WriteLine("3 - Zurück");
+					Console.Write("\nAuswahl: ");
 
-				int artWahl;
-				while (!int.TryParse(Console.ReadLine(), out artWahl) || artWahl < 1 || artWahl > 3) {
-					Console.WriteLine("Ungültige Eingabe! Bitte 1, 2 oder 3 wählen.");
-					Console.Write("Auswahl: ");
+					try {
+						input = Convert.ToInt32(Console.ReadLine());
+					} catch (FormatException) {
+						Console.WriteLine("Ungültige Eingabe!");
+					}
+
+					//int artWahl;
+					//while (!int.TryParse(Console.ReadLine(), out artWahl) || artWahl < 1 || artWahl > 3) {
+					//	Console.WriteLine("Ungültige Eingabe! Bitte 1, 2 oder 3 wählen.");  //weitere Tiere anlegen!
+					//	Console.Write("Auswahl: ");
+					//}
+
+					Console.Write("Name: ");
+					string name = Console.ReadLine();
+					Console.Write("Alter: ");
+					int alter = Convert.ToInt32(Console.ReadLine());
+					Console.Write("Gehege ID: ");
+					int gehegeId = Convert.ToInt32(Console.ReadLine());
+
+					Tier neuesTier;
+					switch (input) {
+						case 1: // Löwe
+							Console.Write("Ist Rudelfuehrer? (j/n): ");
+							bool rudelfuehrer = Console.ReadLine()?.Trim().ToLower() == "j";
+							neuesTier = new Loewe {
+								Name = name,
+								Art = "Loewe",
+								Alter = alter,
+								GehegeId = gehegeId,
+								IstRudelfuehrer = rudelfuehrer
+							};
+							tierService.Hinzufuegen(neuesTier);
+							Console.WriteLine("Neues Tier erfolgreich angelegt!");
+							Console.ReadLine();
+							break;
+						case 2: // Elefant
+							Console.Write("Ruessel-Länge (in Meter): ");
+							double ruesselLaenge = Convert.ToDouble(Console.ReadLine());
+							neuesTier = new Elefant {
+								Name = name,
+								Art = "Elefant",
+								Alter = alter,
+								GehegeId = gehegeId,
+								RuesselLaenge = ruesselLaenge
+							};
+							tierService.Hinzufuegen(neuesTier);
+							Console.WriteLine("Neues Tier erfolgreich angelegt!");
+							Console.ReadLine();
+							break;
+						case 3:
+							back = true;
+							break;
+						default:
+							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 3 an!");
+							Console.ReadKey();
+							break;
+					}
+					back = true;
 				}
-
-				Console.Write("Name: ");
-				string name = Console.ReadLine();
-				Console.Write("Alter: ");
-				int alter = Convert.ToInt32(Console.ReadLine());
-				Console.Write("Gehege ID: ");
-				int gehegeId = Convert.ToInt32(Console.ReadLine());
-
-				Tier neuesTier;
-				switch (artWahl) {
-					case 1: // Löwe
-						Console.Write("Ist Rudelführer? (j/n): ");
-						bool rudelfuehrer = Console.ReadLine()?.Trim().ToLower() == "j";
-						neuesTier = new Loewe {
-							Name = name,
-							Art = "Loewe",
-							Alter = alter,
-							GehegeId = gehegeId,
-							IstRudelfuehrer = rudelfuehrer
-						};
-						tierService.Hinzufuegen(neuesTier);
-						break;
-					case 2: // Elefant
-						Console.Write("Rüssel-Länge (in Meter): ");
-						double ruesselLaenge = Convert.ToDouble(Console.ReadLine());
-						neuesTier = new Elefant {
-							Name = name,
-							Art = "Elefant",
-							Alter = alter,
-							GehegeId = gehegeId,
-							RuesselLaenge = ruesselLaenge
-						};
-						tierService.Hinzufuegen(neuesTier);
-						break;
-				}
-				Console.WriteLine("Neues Tier erfolgreich angelegt!");
-				Console.ReadLine();
 			}
 
 			void TierLoeschen() {
