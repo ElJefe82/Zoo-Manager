@@ -278,75 +278,26 @@ namespace Zoo_Manager {
 			}
 
 			void TierAnlegen() {
-				bool back = false;
-				while (!back) {
-					Console.Clear();
-					Console.WriteLine("=== Neues Tier anlegen ===");
-					Console.WriteLine("Wähle die Tierart:");
-					Console.WriteLine("1 - Löwe");
-					Console.WriteLine("2 - Elefant");
-					Console.WriteLine("3 - Zurück");
-					Console.Write("\nAuswahl: ");
+				Console.Clear();
+				Console.WriteLine("=== Neues Tier anlegen ===");
+				Console.Write("Name: ");
+				string name = Console.ReadLine();
+				Console.Write("Alter: ");
+				int alter = Convert.ToInt32(Console.ReadLine());
+				Console.Write("Art: ");
+				string art = Console.ReadLine();
+				Console.Write("Gehege ID: ");
+				int gehegeId = Convert.ToInt32(Console.ReadLine());
 
-					try {
-						input = Convert.ToInt32(Console.ReadLine());
-					} catch (FormatException) {
-						Console.WriteLine("Ungültige Eingabe!");
-					}
-
-					//int artWahl;
-					//while (!int.TryParse(Console.ReadLine(), out artWahl) || artWahl < 1 || artWahl > 3) {
-					//	Console.WriteLine("Ungültige Eingabe! Bitte 1, 2 oder 3 wählen.");  //weitere Tiere anlegen!
-					//	Console.Write("Auswahl: ");
-					//}
-
-					Console.Write("Name: ");
-					string name = Console.ReadLine();
-					Console.Write("Alter: ");
-					int alter = Convert.ToInt32(Console.ReadLine());
-					Console.Write("Gehege ID: ");
-					int gehegeId = Convert.ToInt32(Console.ReadLine());
-
-					Tier neuesTier;
-					switch (input) {
-						case 1: // Löwe
-							Console.Write("Ist Rudelfuehrer? (j/n): ");
-							bool rudelfuehrer = Console.ReadLine()?.Trim().ToLower() == "j";
-							neuesTier = new Loewe {
-								Name = name,
-								Art = "Loewe",
-								Alter = alter,
-								GehegeId = gehegeId,
-								IstRudelfuehrer = rudelfuehrer
-							};
-							tierService.Hinzufuegen(neuesTier);
-							Console.WriteLine("Neues Tier erfolgreich angelegt!");
-							Console.ReadLine();
-							break;
-						case 2: // Elefant
-							Console.Write("Ruessel-Länge (in Meter): ");
-							double ruesselLaenge = Convert.ToDouble(Console.ReadLine());
-							neuesTier = new Elefant {
-								Name = name,
-								Art = "Elefant",
-								Alter = alter,
-								GehegeId = gehegeId,
-								RuesselLaenge = ruesselLaenge
-							};
-							tierService.Hinzufuegen(neuesTier);
-							Console.WriteLine("Neues Tier erfolgreich angelegt!");
-							Console.ReadLine();
-							break;
-						case 3:
-							back = true;
-							break;
-						default:
-							Console.WriteLine("Bitte geben sie nur Zahlen von 1 bis 3 an!");
-							Console.ReadKey();
-							break;
-					}
-					back = true;
-				}
+				Tier neuesTier = new Tier {
+					Name = name,
+					Art = art,
+					Alter = alter,
+					GehegeId = gehegeId,
+				};
+				tierService.Hinzufuegen(neuesTier);
+				Console.WriteLine("Neues Tier erfolgreich angelegt!");
+				Console.ReadKey();
 			}
 
 			void TierLoeschen() {
@@ -443,65 +394,23 @@ namespace Zoo_Manager {
 			}
 
 			void GehegeAnlegen() {
-				bool back = false;
-				while (!back) {
-					Console.Clear();
-					Console.WriteLine("=== Neues Gehege anlegen ===");
-					Console.WriteLine("Wähle das Gehege:");
-					Console.WriteLine("1 - Raubtierhaus");
-					Console.WriteLine("2 - Afrikasavanne");
-					Console.WriteLine("3 - Zurück");
-					Console.WriteLine("Auswahl: ");
+				Console.Clear();
+				Console.WriteLine("=== Neues Gehege anlegen ===");
+				Console.Write("Name des Geheges: ");
+				string gehegename = Console.ReadLine();
+				Console.Write("Lage: ");
+				string lage = Console.ReadLine();
+				Console.Write("Anzahl der Tiere: ");
+				int anzahlTiere = Convert.ToInt32(Console.ReadLine());
 
-					try {
-						input = Convert.ToInt32(Console.ReadLine());
-					} catch (FormatException) {
-						Console.WriteLine("Ungültige Eingabe!");
-					}
-
-					//int nameWahl;
-					//while (!int.TryParse(Console.ReadLine(), out nameWahl) || nameWahl < 1 || nameWahl > 3) {
-					//	Console.WriteLine("Ungültige Eingabe! Bitte 1, 2 oder 3 wählen.");  //weitere Gehege anlegen!
-					//	Console.Write("Auswahl: ");
-					//}
-
-					Console.Write("Lage: ");
-					string lage = Console.ReadLine();
-					Console.Write("Anzahl der Tiere: ");
-					int anzahlTiere = Convert.ToInt32(Console.ReadLine());
-
-					Gehege neuesGehege;
-					switch (input) {
-						case 1: // Raubtierhaus
-							Console.Write("Hat Zaun? (j/n): ");
-							bool hatZaun = Console.ReadLine()?.Trim().ToLower() == "j";
-							neuesGehege = new Raubtierhaus {
-								Name = "Raubtierhaus",
-								Lage = lage,
-								AnzahlTiere = anzahlTiere,
-								HatZaun = hatZaun
-							};
-							gehegeService.Hinzufuegen(neuesGehege);
-							break;
-						case 2: // Afrikasavanne		.				
-							Console.Write("Hat Wasserstelle? (j/n): ");
-							bool hatWasserstelle = Console.ReadLine()?.Trim().ToLower() == "j";
-							neuesGehege = new Afrikasavanne {
-								Name = "Afrikasavanne",
-								Lage = lage,
-								AnzahlTiere = anzahlTiere,
-								HatWasserstelle = hatWasserstelle
-							};
-							gehegeService.Hinzufuegen(neuesGehege);
-							break;
-						case 3: // Afrikasavanne		.				
-							back = true;
-							break;
-					}
-					Console.WriteLine("Neues Gehege erfolgreich angelegt!");
-					Console.ReadLine();
-					back = true;
-				}
+				Gehege neuesGehege = new Gehege {
+					Name = gehegename,
+					Lage = lage,
+					AnzahlTiere = anzahlTiere,
+				};
+				gehegeService.Hinzufuegen(neuesGehege);
+				Console.WriteLine("Neues Gehege erfolgreich angelegt!");
+				Console.ReadKey();
 			}
 
 			void GehegeLoeschen() {
