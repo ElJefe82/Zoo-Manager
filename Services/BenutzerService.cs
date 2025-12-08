@@ -19,6 +19,12 @@ namespace Zoo_Manager.Services {
 					PasswortHash = HashPasswort("admin"),
 					Rolle = Rolle.Admin,
 				});
+
+				_benutzer.Add(new Benutzer {
+					Benutzername = "pfleger",
+					PasswortHash = HashPasswort("pfleger"),
+					Rolle = Rolle.Pfleger,
+				});
 				JsonRepository.SpeichereDaten(_benutzer, _filePath);
 			}
 		}
