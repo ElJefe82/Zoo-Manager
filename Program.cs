@@ -1,6 +1,7 @@
 ﻿using Zoo_Manager.Menues;
 using Zoo_Manager.Models;
 using Zoo_Manager.Services;
+using Zoo_Manager.Utils;
 
 namespace Zoo_Manager {
 	internal class Program {
@@ -19,7 +20,7 @@ namespace Zoo_Manager {
 			var besucherInfoMenu = new BesucherInfoMenu(tierService, gehegeService);
 			var pflegermenu = new PflegerMenu(gehegeMenu, besucherInfoMenu);
 			var pflegerVerwaltungMenu = new PflegerVerwaltungMenu(pflegerService);
-			var adminMenu = new AdminMenu(tierMenu, gehegeMenu, pflegermenu, tierService, pflegerVerwaltungMenu, spielService);
+			var adminMenu = new AdminMenu(tierMenu, gehegeMenu, pflegermenu, tierService, pflegerVerwaltungMenu, spielService, besucherInfoMenu);
 			var besucherMenu = new BesucherMenu(besucherInfoMenu, spielService);
 
 			var input = 0;
@@ -45,7 +46,7 @@ namespace Zoo_Manager {
 						besucherMenu.ZeigeBesucherMenue();
 						break;
 					case 3:
-						const int wartezeitMs = 1000;
+						const int wartezeitMs = 500;
 						Console.Write("Programm wird beendet");
 						for (int i = 0; i < 3; i++) {
 							Thread.Sleep(wartezeitMs);
@@ -66,25 +67,19 @@ namespace Zoo_Manager {
 			void LoginMenue() {
 				Console.Clear();
 				Console.WriteLine("=== Login ===");
-				Console.Write("Benutzername: ");
-				string benutzername = Console.ReadLine();
+				string benutzername = InputHelper.ReadNonEmptyString("Benutzername: ");
 
 				while (string.IsNullOrWhiteSpace(benutzername)) {
-					Console.WriteLine("Benutzername darf nicht leer sein. Bitte erneut eingeben.");
 					Console.ReadKey();
 					Console.Clear();
 					Console.WriteLine("=== Login ===");
-					Console.Write("Benutzername: ");
-					benutzername = Console.ReadLine();
+					benutzername = InputHelper.ReadNonEmptyString("Benutzername: ");
 				}
 
-				Console.Write("Passwort: ");
-				string passwort = Console.ReadLine();
+				string passwort = InputHelper.ReadNonEmptyString("Passwort: ");
 
 				while (string.IsNullOrWhiteSpace(passwort)) {
-					Console.WriteLine("Passwort darf nicht leer sein. Bitte erneut eingeben.");
-					Console.Write("Passwort: ");
-					passwort = Console.ReadLine();
+					passwort = InputHelper.ReadNonEmptyString("Passwort: ");
 				}
 
 				if (!benutzerService.Login(benutzername, passwort)) {

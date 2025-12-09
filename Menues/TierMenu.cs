@@ -1,5 +1,6 @@
 ﻿using Zoo_Manager.Models;
 using Zoo_Manager.Services;
+using Zoo_Manager.Utils;
 
 namespace Zoo_Manager.Menues {
 	internal class TierMenu {
@@ -66,20 +67,16 @@ namespace Zoo_Manager.Menues {
 		void TierAnlegen() {
 			Console.Clear();
 			Console.WriteLine("=== Neues Tier anlegen ===");
-			Console.Write("Name: ");
-			string name = Console.ReadLine();
-			Console.Write("Alter: ");
-			int alter = Convert.ToInt32(Console.ReadLine());
-			Console.Write("Art: ");
-			string art = Console.ReadLine();
-			Console.Write("Gehege ID: ");
-			int gehegeId = Convert.ToInt32(Console.ReadLine());
+			string name = InputHelper.ReadNonEmptyString("Name: ");
+			int alter = InputHelper.ReadInt("Alter: ");
+			string art = InputHelper.ReadNonEmptyString("Art: ");
+			string gehegename = InputHelper.ReadNonEmptyString("Gehegename: ");
 
 			Tier neuesTier = new Tier {
 				Name = name,
 				Art = art,
 				Alter = alter,
-				GehegeId = gehegeId,
+				GehegeName = gehegename,
 			};
 			tierService.Hinzufuegen(neuesTier);
 			Console.WriteLine("Neues Tier erfolgreich angelegt!");
@@ -89,8 +86,8 @@ namespace Zoo_Manager.Menues {
 		void TierLoeschen() {
 			Console.Clear();
 			Console.WriteLine("=== Tier löschen ===");
-			Console.Write("Geben Sie die ID des zu löschenden Tiers ein: ");
-			int id = Convert.ToInt32(Console.ReadLine());
+			TiereAnzeigen();
+			int id = InputHelper.ReadInt("Geben Sie die ID des zu löschenden Tiers ein: ");
 			bool erfolg = tierService.Loeschen(id);
 			if (erfolg)
 				Console.WriteLine("Tier erfolgreich gelöscht!");
@@ -103,8 +100,7 @@ namespace Zoo_Manager.Menues {
 			Console.Clear();
 			Console.WriteLine("=== Tier aktualisieren ===");
 			TiereAnzeigen();
-			Console.Write("Geben Sie die ID des zu aktualisierenden Tiers ein: ");
-			int id = Convert.ToInt32(Console.ReadLine());
+			int id = InputHelper.ReadInt("Geben Sie die ID des zu aktualisierenden Tiers ein: ");
 
 			var tier = tierService.Suche(id);
 			if (tier == null) {
@@ -117,8 +113,8 @@ namespace Zoo_Manager.Menues {
 			tier.Name = Console.ReadLine();
 			Console.Write("Neues Alter (aktuell: {0}): ", tier.Alter);
 			tier.Alter = Convert.ToInt32(Console.ReadLine());
-			Console.Write("Neue Gehege ID (aktuell: {0}): ", tier.GehegeId);
-			tier.GehegeId = Convert.ToInt32(Console.ReadLine());
+			Console.Write("Neue Gehege ID (aktuell: {0}): ", tier.GehegeName);
+			tier.GehegeName = Console.ReadLine();
 			tierService.Update(tier);
 			Console.WriteLine("Tier erfolgreich aktualisiert!");
 			Console.ReadLine();

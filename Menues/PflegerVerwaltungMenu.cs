@@ -1,5 +1,6 @@
 ﻿using Zoo_Manager.Models;
 using Zoo_Manager.Services;
+using Zoo_Manager.Utils;
 
 namespace Zoo_Manager.Menues {
 	internal class PflegerVerwaltungMenu {
@@ -66,10 +67,8 @@ namespace Zoo_Manager.Menues {
 		void PflegerAnlegen() {
 			Console.Clear();
 			Console.WriteLine("=== Neuen Pfleger anlegen ===");
-			Console.Write("Name: ");
-			string name = Console.ReadLine();
-			Console.Write("Einsatzort: ");
-			string einsatzort = Console.ReadLine();
+			string name = InputHelper.ReadNonEmptyString("Name: ");
+			string einsatzort = InputHelper.ReadNonEmptyString("Einsatzort: ");
 			Pfleger neuerPfleger = new Pfleger {
 				Name = name,
 				Einsatzort = einsatzort
@@ -82,8 +81,8 @@ namespace Zoo_Manager.Menues {
 		void PflegerLoeschen() {
 			Console.Clear();
 			Console.WriteLine("=== Pfleger löschen ===");
-			Console.Write("Geben Sie die ID des zu löschenden Pflegers ein: ");
-			int id = Convert.ToInt32(Console.ReadLine());
+			PflegerAnzeigen();
+			int id = InputHelper.ReadInt("Geben Sie die ID des zu löschenden Pflegers ein: ");
 			bool erfolg = pflegerService.Loeschen(id);
 			if (erfolg)
 				Console.WriteLine("Pfleger erfolgreich gelöscht!");
@@ -96,8 +95,7 @@ namespace Zoo_Manager.Menues {
 			Console.Clear();
 			Console.WriteLine("=== Pfleger aktualisieren ===");
 			PflegerAnzeigen();
-			Console.Write("Geben Sie die ID des zu aktualisierenden Pflegers ein: ");
-			int id = Convert.ToInt32(Console.ReadLine());
+			int id = InputHelper.ReadInt("Geben Sie die ID des zu aktualisierenden Pflegers ein: ");
 			var pfleger = pflegerService.Suche(id);
 			if (pfleger == null) {
 				Console.WriteLine("Pfleger mit dieser ID nicht gefunden!");

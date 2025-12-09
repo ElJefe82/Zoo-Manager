@@ -1,5 +1,6 @@
 ﻿using Zoo_Manager.Models;
 using Zoo_Manager.Services;
+using Zoo_Manager.Utils;
 
 namespace Zoo_Manager.Menues {
 	internal class GehegeMenu {
@@ -66,12 +67,9 @@ namespace Zoo_Manager.Menues {
 		void GehegeAnlegen() {
 			Console.Clear();
 			Console.WriteLine("=== Neues Gehege anlegen ===");
-			Console.Write("Name des Geheges: ");
-			string gehegename = Console.ReadLine();
-			Console.Write("Lage: ");
-			string lage = Console.ReadLine();
-			Console.Write("Anzahl der Tiere: ");
-			int anzahlTiere = Convert.ToInt32(Console.ReadLine());
+			string gehegename = InputHelper.ReadNonEmptyString("Name des Geheges: ");
+			string lage = InputHelper.ReadNonEmptyString("Lage: ");
+			int anzahlTiere = InputHelper.ReadInt("Anzahl der Tiere: ");
 
 			Gehege neuesGehege = new Gehege {
 				Name = gehegename,
@@ -86,8 +84,8 @@ namespace Zoo_Manager.Menues {
 		void GehegeLoeschen() {
 			Console.Clear();
 			Console.WriteLine("=== Gehege löschen ===");
-			Console.Write("Geben Sie die ID des zu löschenden Geheges ein: ");
-			int id = Convert.ToInt32(Console.ReadLine());
+			GehegeAnzeigen();
+			int id = InputHelper.ReadInt("Geben Sie die ID des zu löschenden Geheges ein:");
 			bool erfolg = gehegeService.Loeschen(id);
 			if (erfolg)
 				Console.WriteLine("Gehege erfolgreich gelöscht!");
@@ -100,8 +98,7 @@ namespace Zoo_Manager.Menues {
 			Console.Clear();
 			Console.WriteLine("=== Gehege aktualisieren ===");
 			GehegeAnzeigen();
-			Console.Write("Geben Sie die ID des zu aktualisierenden Geheges ein: ");
-			int id = Convert.ToInt32(Console.ReadLine());
+			int id = InputHelper.ReadInt("Geben Sie die ID des zu aktualisierenden Geheges ein: ");
 			var gehege = gehegeService.Suche(id);
 			if (gehege == null) {
 				Console.WriteLine("Gehege mit dieser ID nicht gefunden!");
