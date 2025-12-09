@@ -9,14 +9,16 @@ namespace Zoo_Manager.Menues {
 		private TierService tierService;
 		private PflegerVerwaltungMenu pflegerVerwaltungMenu;
 		private SpielService spielService;
+		private BesucherInfoMenu besucherInfoMenu;
 
-		public AdminMenu(TierMenu tierMenu, GehegeMenu gehegeMenu, PflegerMenu pflegerMenu, TierService tierService, PflegerVerwaltungMenu pflegerVerwaltungMenu, SpielService spielService) {
+		public AdminMenu(TierMenu tierMenu, GehegeMenu gehegeMenu, PflegerMenu pflegerMenu, TierService tierService, PflegerVerwaltungMenu pflegerVerwaltungMenu, SpielService spielService, BesucherInfoMenu besucherInfoMenu) {
 			this.tierMenu = tierMenu;
 			this.gehegeMenu = gehegeMenu;
 			this.pflegerMenu = pflegerMenu;
 			this.tierService = tierService;
 			this.pflegerVerwaltungMenu = pflegerVerwaltungMenu;
 			this.spielService = spielService;
+			this.besucherInfoMenu = besucherInfoMenu;
 		}
 
 		public void ZeigeAdminMenue() {
@@ -49,7 +51,7 @@ namespace Zoo_Manager.Menues {
 						pflegerVerwaltungMenu.PflegerMenueAdmin();
 						break;
 					case 4:
-						BesucherInfo();
+						besucherInfoMenu.BesucherInfo();
 						break;
 					case 5:
 						spielService.Start();
@@ -63,14 +65,6 @@ namespace Zoo_Manager.Menues {
 						break;
 				}
 			}
-		}
-		void BesucherInfo() {
-			Console.Clear();
-			Console.WriteLine("=== Besucherinfo ===");
-			Console.WriteLine("Willkommen im Zoo! Hier finden Sie Informationen über unsere Tiere und Gehege.");
-			foreach (var t in tierService.GetAll())
-				Console.WriteLine(t);
-			Console.ReadLine();
 		}
 	}
 }
