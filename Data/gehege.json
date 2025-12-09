@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 1,
+    "Name": "Affenhaus",
+    "Lage": "200 Meter links vom Eingang",
+    "AnzahlTiere": 2
+  },
+  {
+    "Id": 2,
+    "Name": "Rauptierhaus",
+    "Lage": "100m rechts neben dem Affenhaus",
+    "AnzahlTiere": 1
+  },
+  {
+    "Id": 3,
+    "Name": "Lebensraum Wasser",
+    "Lage": "Neben der Zooverwaltung",
+    "AnzahlTiere": 1
+  },
+  {
+    "Id": 4,
+    "Name": "Afrikasavanne",
+    "Lage": "Neben Eingang Nord",
+    "AnzahlTiere": 1
+  }
+]

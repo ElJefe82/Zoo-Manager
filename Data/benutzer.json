@@ -1,0 +1,12 @@
+[
+  {
+    "Benutzername": "admin",
+    "PasswortHash": "jGl25bVBBBW96Qi9Te4V37Fnqchz/Eu4qB9vKrRIqRg=",
+    "Rolle": 0
+  },
+  {
+    "Benutzername": "pfleger",
+    "PasswortHash": "yurYtqFBHSyWxCwrRpdWumnehwNcqXffc1M9lHqcfHc=",
+    "Rolle": 1
+  }
+]

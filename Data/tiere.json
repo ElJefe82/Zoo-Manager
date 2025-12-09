@@ -1,0 +1,37 @@
+[
+  {
+    "Id": 1,
+    "Name": "Simba",
+    "Art": "Loewe",
+    "Alter": 4,
+    "GehegeName": "Raubtierhaus"
+  },
+  {
+    "Id": 2,
+    "Name": "Affi",
+    "Art": "Gorilla",
+    "Alter": 8,
+    "GehegeName": "Affenhaus"
+  },
+  {
+    "Id": 3,
+    "Name": "Dumbo",
+    "Art": "Elefant",
+    "Alter": 5,
+    "GehegeName": "Afrikasavanne"
+  },
+  {
+    "Id": 4,
+    "Name": "Rico",
+    "Art": "Pinguin",
+    "Alter": 8,
+    "GehegeName": "Lebensraum Wasser"
+  },
+  {
+    "Id": 5,
+    "Name": "Tarzan",
+    "Art": "Kapuziner",
+    "Alter": 18,
+    "GehegeName": "Affenhaus"
+  }
+]
