@@ -37,7 +37,7 @@ namespace Zoo_Manager.Services {
 				tier.Name = tier.Name;
 				tier.Art = updatedTier.Art;
 				tier.Alter = updatedTier.Alter;
-				tier.GehegeId = updatedTier.GehegeId;
+				tier.GehegeName = updatedTier.GehegeName;
 				JsonRepository.SpeichereDaten(_tiere, _filePath);
 				return true;
 			}
