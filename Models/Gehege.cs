@@ -7,7 +7,7 @@
 		public int AnzahlTiere { get; set; } = 0;         //Anzahl der Tiere im Gehege
 
 		public override string ToString() {
-			return $"ID: {Id}, Name: {Name}, Lage: {Lage}, AnzahlTiere: {AnzahlTiere} Tiere";
+			return $"{Id}) Name: {Name}, Lage: {Lage}, AnzahlTiere: {AnzahlTiere} Tiere";
 		}
 	}
 }

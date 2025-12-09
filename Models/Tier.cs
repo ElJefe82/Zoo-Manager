@@ -7,7 +7,7 @@
 		public int GehegeId { get; set; } // Verweis auf Gehege
 
 		public override string ToString() {
-			return $"ID: {Id}, Name: {Name}, Art: {Art}, Alter: {Alter} Jahre, Gehege: {GehegeId}";
+			return $"{Id}) Name: {Name}, Art: {Art}, Alter: {Alter} Jahre, Gehege: {GehegeId}";
 		}
 	}
 }

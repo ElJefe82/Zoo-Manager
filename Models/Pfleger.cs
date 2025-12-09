@@ -6,7 +6,7 @@
 		public string Einsatzort { get; set; } = string.Empty;  //z.B. Reptilienhaus
 
 		public override string ToString() {
-			return $"ID: {Id}, Name: {Name}, Einsatzort: {Einsatzort}";
+			return $"{Id}) Name: {Name}, Einsatzort: {Einsatzort}";
 		}
 	}
 }
