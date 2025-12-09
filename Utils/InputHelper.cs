@@ -19,21 +19,5 @@
 				Console.WriteLine("Bitte eine gültige ganze Zahl eingeben.");
 			}
 		}
-
-		public static double ReadDouble(string prompt) {
-			while (true) {
-				Console.Write(prompt);
-				var eingabe = Console.ReadLine();
-				if (double.TryParse(eingabe, out var zahl))
-					return zahl;
-				Console.WriteLine("Bitte eine gültige Zahl eingeben (z.B. 12.5).");
-			}
-		}
-
-		public static bool WaehleAus(string prompt) {
-			Console.Write($"{prompt} (j/n): ");
-			var auswahl = Console.ReadLine()?.Trim().ToLower();
-			return auswahl == "j" || auswahl == "y";
-		}
 	}
 }
