@@ -1,37 +1,47 @@
-﻿namespace Zoo_Manager.Menues {
+﻿using Zoo_Manager.Services;
+
+namespace Zoo_Manager.Menues {
 	internal class BesucherMenu {
-		//void BesucherMenue() {
-		//	bool back = false;
+		private BesucherInfoMenu besucherInfoMenu;
+		private SpielService spielService;
 
-		//	while (!back) {
+		public BesucherMenu(BesucherInfoMenu besucherInfoMenu, SpielService spielService) {
+			this.besucherInfoMenu = besucherInfoMenu;
+			this.spielService = spielService;
+		}
 
-		//		Console.Clear();
-		//		Console.WriteLine("=== Besucherbereich ===");
-		//		Console.WriteLine("1 - Besucherinfo");
-		//		Console.WriteLine("2 - Tier.Ratespiel");
-		//		Console.WriteLine("3 - Zurück");
-		//		Console.Write("\nAuswahl:");
+		public void ZeigeBesucherMenue() {
+			bool back = false;
 
-		//		switch (Console.ReadLine()!) {
+			while (!back) {
 
-		//			case "1":
-		//				BesucherInfo();
-		//				break;
+				Console.Clear();
+				Console.WriteLine("=== Besucherbereich ===");
+				Console.WriteLine("1 - Besucherinfo");
+				Console.WriteLine("2 - Tier.Ratespiel");
+				Console.WriteLine("3 - Zurück");
+				Console.Write("\nAuswahl:");
 
-		//			case "2":
-		//				//spielService.Start();
-		//				break;
+				switch (Console.ReadLine()!) {
 
-		//			case "3":
-		//				back = true;
-		//				break;
+					case "1":
+						besucherInfoMenu.BesucherInfo();
+						break;
 
-		//			default:
-		//				Console.WriteLine("Ungültige Eingabe! Bitte versuchen Sie es erneut.");
-		//				Console.ReadKey();
-		//				break;
-		//		}
-		//	}
-		//}
+					case "2":
+						spielService.Start();
+						break;
+
+					case "3":
+						back = true;
+						break;
+
+					default:
+						Console.WriteLine("Ungültige Eingabe! Bitte versuchen Sie es erneut.");
+						Console.ReadKey();
+						break;
+				}
+			}
+		}
 	}
 }
