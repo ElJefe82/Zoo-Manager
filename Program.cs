@@ -19,7 +19,8 @@ namespace Zoo_Manager {
 			var besucherInfoMenu = new BesucherInfoMenu(tierService, gehegeService);
 			var pflegermenu = new PflegerMenu(gehegeMenu, besucherInfoMenu);
 			var pflegerVerwaltungMenu = new PflegerVerwaltungMenu(pflegerService);
-			var adminMenue = new AdminMenu(tierMenu, gehegeMenu, pflegermenu, tierService, pflegerVerwaltungMenu, spielService);
+			var adminMenu = new AdminMenu(tierMenu, gehegeMenu, pflegermenu, tierService, pflegerVerwaltungMenu, spielService);
+			var besucherMenu = new BesucherMenu(besucherInfoMenu, spielService);
 
 			var input = 0;
 			while (input != 3) {
@@ -41,7 +42,7 @@ namespace Zoo_Manager {
 						LoginMenue();
 						break;
 					case 2:
-						//BesucherMenue();
+						besucherMenu.ZeigeBesucherMenue();
 						break;
 					case 3:
 						const int wartezeitMs = 1000;
@@ -97,7 +98,7 @@ namespace Zoo_Manager {
 
 				switch (benutzerService.LoggedInBenutzer.Rolle) {
 					case Rolle.Admin:
-						adminMenue.ZeigeAdminMenue();
+						adminMenu.ZeigeAdminMenue();
 						break;
 
 					case Rolle.Pfleger:
@@ -105,7 +106,7 @@ namespace Zoo_Manager {
 						break;
 
 					default:
-						//BesucherMenue();
+						besucherMenu.ZeigeBesucherMenue();
 						break;
 				}
 			}
